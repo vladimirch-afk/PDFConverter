@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PDFConverter</string>
+    <string name="main_label">Изображения</string>
 </resources>
