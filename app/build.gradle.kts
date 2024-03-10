@@ -53,7 +53,9 @@ dependencies {
     implementation("com.google.firebase:protolite-well-known-types:18.0.0")
 
     implementation("androidx.activity:activity-ktx:1.8.2")
-    api("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+    api("com.theartofdev.edmodo:android-image-cropper:2.8.+")
+
+
 
 
     testImplementation("junit:junit:4.13.2")

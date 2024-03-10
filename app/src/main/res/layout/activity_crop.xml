@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".CropActivity">
 
+    <!-- Image Cropper fill the remaining available height -->
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="108dp"
+        android:layout_height="39dp"
+        android:text="Сохранить изменения"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852" />
+
+    <ImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="416dp"
+        android:layout_height="446dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/cropButton"
+        android:layout_width="122dp"
+        android:layout_height="26dp"
+        android:text="Обрезать"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cropImageView"
+        app:layout_constraintVertical_bias="0.764" />
+
+    <Button
+        android:id="@+id/cancelCropButton"
+        android:layout_width="84dp"
+        android:layout_height="36dp"
+        android:text="Отмена"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.922" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
