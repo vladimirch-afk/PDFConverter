@@ -1,10 +1,13 @@
 package com.example.pdfconverter
 
 import android.content.Intent
-import android.location.GnssAntennaInfo.Listener
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,8 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class CropActivity : AppCompatActivity() {
@@ -19,6 +24,7 @@ class CropActivity : AppCompatActivity() {
     private var resultUri : Uri? = null
     private var cropImageView : ImageView? = null
     private var address : String? = null
+    private var currBitmap : Bitmap? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
@@ -43,6 +49,9 @@ class CropActivity : AppCompatActivity() {
         val saveButton = findViewById<Button>(R.id.saveButton)
         val cancelButton = findViewById<Button>(R.id.cancelCropButton)
 
+        val bwButton = findViewById<Button>(R.id.bwButton)
+        val colorButton = findViewById<Button>(R.id.colorButton)
+
         cropButton.setOnClickListener {
             startCrop()
         }
@@ -51,6 +60,13 @@ class CropActivity : AppCompatActivity() {
         }
         cancelButton.setOnClickListener {
             finish()
+        }
+
+        bwButton.setOnClickListener {
+            setImageBW()
+        }
+        colorButton.setOnClickListener {
+            setImageToColor()
         }
 
         //launchCrop(address.toString())
@@ -101,6 +117,7 @@ class CropActivity : AppCompatActivity() {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 println(error)
+                setImage(null)
             }
         }
     }
@@ -110,11 +127,49 @@ class CropActivity : AppCompatActivity() {
         if (uri != null) {
             address = uri.path.toString()
         }
+        currBitmap = android.graphics.BitmapFactory.decodeFile(address.toString())
+        cropImageView!!.setImageBitmap(currBitmap)
+    }
+
+    private fun setImageBW() {
+        var bitmap = android.graphics.BitmapFactory.decodeFile(address.toString())
+        bitmap = toGrayscale(bitmap)
+        currBitmap = bitmap
+        cropImageView!!.setImageBitmap(bitmap)
+    }
+
+    private fun setImageToColor() {
+        currBitmap = null
         cropImageView!!.setImageBitmap(android.graphics.BitmapFactory.decodeFile(address.toString()))
     }
 
     private fun saveImage() {
+        if (currBitmap != null) {
+            try {
+                FileOutputStream(address).use { out ->
+                    currBitmap!!.compress(
+                        Bitmap.CompressFormat.PNG,
+                        100,
+                        out
+                    ) // bmp is your Bitmap instance
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
         NewImageActivity.addImage(address.toString())
         finish()
+    }
+
+    fun toGrayscale(srcImage: Bitmap): Bitmap {
+        val bmpGrayscale =
+            Bitmap.createBitmap(srcImage.getWidth(), srcImage.getHeight(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmpGrayscale)
+        val paint = Paint()
+        val cm = ColorMatrix()
+        cm.setSaturation(0f)
+        paint.setColorFilter(ColorMatrixColorFilter(cm))
+        canvas.drawBitmap(srcImage, 0f, 0f, paint)
+        return bmpGrayscale
     }
 }

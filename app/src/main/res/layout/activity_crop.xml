@@ -10,15 +10,15 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="108dp"
-        android:layout_height="39dp"
+        android:layout_width="128dp"
+        android:layout_height="67dp"
         android:text="Сохранить изменения"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintVertical_bias="0.873" />
 
     <ImageView
         android:id="@+id/cropImageView"
@@ -34,26 +34,50 @@
 
     <Button
         android:id="@+id/cropButton"
-        android:layout_width="122dp"
-        android:layout_height="26dp"
+        android:layout_width="126dp"
+        android:layout_height="53dp"
         android:text="Обрезать"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cropImageView"
-        app:layout_constraintVertical_bias="0.764" />
+        app:layout_constraintVertical_bias="0.759" />
 
     <Button
         android:id="@+id/cancelCropButton"
-        android:layout_width="84dp"
-        android:layout_height="36dp"
+        android:layout_width="127dp"
+        android:layout_height="59dp"
         android:text="Отмена"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        app:layout_constraintVertical_bias="0.976" />
+
+    <Button
+        android:id="@+id/bwButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ч/Б"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.866" />
+
+    <Button
+        android:id="@+id/colorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Цветной"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.916"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.866" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,10 @@
 package com.example.pdfconverter
 
+import kotlinx.serialization.Serializable
 
-class MyImage(
+@Serializable
+data class MyImage(
     var name: String,
     var images: MutableList<String>,
-) {
-    override fun toString(): String {
-        return "$name"
-    }
-}
+)
 
