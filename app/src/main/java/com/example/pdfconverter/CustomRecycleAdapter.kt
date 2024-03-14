@@ -43,8 +43,8 @@ class CustomRecyclerAdapter (
             // You can show an error message or set a default image
         }
         holder.button1.setOnClickListener {
-            MainActivity.deleteImage(image.name)
-            (ctx as MainActivity).adapter.notifyDataSetChanged()
+            (ctx as MainActivity).deleteImage(image.name, ctx)
+            ctx.adapter.notifyDataSetChanged()
         }
         holder.button2.setOnClickListener {
             (ctx as MainActivity).exportToPDF(image)

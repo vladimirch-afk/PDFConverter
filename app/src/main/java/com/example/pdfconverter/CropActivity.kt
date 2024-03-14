@@ -25,22 +25,10 @@ class CropActivity : AppCompatActivity() {
     private var cropImageView : ImageView? = null
     private var address : String? = null
     private var currBitmap : Bitmap? = null
+    private var tmpBitmap : Bitmap? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
-
-//        // start picker to get image for cropping and then use the image in cropping activity
-//        CropImage.activity()
-//            .setGuidelines(CropImageView.Guidelines.ON)
-//            .start(this);
-//
-//// start cropping activity for pre-acquired image saved on the device
-//        CropImage.activity(imageUri)
-//            .start(this);
-//
-//// for fragment (DO NOT use `getActivity()`)
-//        CropImage.activity()
-//            .start(getContext(), this);
 
         cropImageView = findViewById<ImageView>(R.id.cropImageView)
         address = intent.getStringExtra("address")
@@ -69,14 +57,8 @@ class CropActivity : AppCompatActivity() {
             setImageToColor()
         }
 
-        //launchCrop(address.toString())
-        //val cropped = cropImageView.croppedImage
-
         cropImageView!!.setImageBitmap(android.graphics.BitmapFactory.decodeFile(address))
         startCrop()
-// or (prefer using uri for performance and better user experience)
-
-// or
     }
 
     private fun startCrop() {
@@ -86,26 +68,6 @@ class CropActivity : AppCompatActivity() {
             .setCropShape(CropImageView.CropShape.RECTANGLE)
             .getIntent(this),
             CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-    }
-
-    private fun launchCrop(address : String) {
-        // start picker to get image for cropping and then use the image in cropping activity
-//        CropImage.activity()
-//            .setGuidelines(CropImageView.Guidelines.ON)
-//            .start(this);
-//
-//// start cropping activity for pre-acquired image saved on the device
-//        CropImage.activity( Uri.fromFile( File(address)))
-//            .start(this);
-
-        CropImage.activity(Uri.fromFile(File(address)))
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setAspectRatio(1920, 1080)
-            .setCropShape(CropImageView.CropShape.RECTANGLE) // default is rectangle
-            .start(this)
-
-// for fragment (DO NOT use `getActivity()`)
-        //CropImage.activity().start(this);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -124,23 +86,24 @@ class CropActivity : AppCompatActivity() {
 
     private fun setImage(uri : Uri?) {
         println(uri?.path)
-        if (uri != null) {
-            address = uri.path.toString()
-        }
-        currBitmap = android.graphics.BitmapFactory.decodeFile(address.toString())
+        currBitmap = android.graphics.BitmapFactory.decodeFile(uri?.path)
         cropImageView!!.setImageBitmap(currBitmap)
     }
 
     private fun setImageBW() {
-        var bitmap = android.graphics.BitmapFactory.decodeFile(address.toString())
-        bitmap = toGrayscale(bitmap)
+        var bitmap = currBitmap
+        tmpBitmap = currBitmap
+        bitmap = toGrayscale(bitmap!!)
         currBitmap = bitmap
         cropImageView!!.setImageBitmap(bitmap)
     }
 
     private fun setImageToColor() {
-        currBitmap = null
-        cropImageView!!.setImageBitmap(android.graphics.BitmapFactory.decodeFile(address.toString()))
+        if (tmpBitmap != null) {
+            currBitmap = tmpBitmap
+            tmpBitmap = null
+        }
+        cropImageView!!.setImageBitmap(currBitmap)
     }
 
     private fun saveImage() {

@@ -1,11 +1,6 @@
 package com.example.pdfconverter
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
-import android.graphics.Paint
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Button
@@ -33,7 +28,7 @@ class NewImageActivity : AppCompatActivity() {
 
         fun createImage() {
             imagesName = System.currentTimeMillis().toString()
-            image = MyImage(imagesName!!, mutableListOf())
+            image = MyImage(imagesName!!, mutableListOf<String>())
         }
 
         fun addImage(path : String) {
@@ -43,29 +38,6 @@ class NewImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_image)
-
-//        val previewView = findViewById<PreviewView>(R.id.cameraView)
-//
-//        // Set the preferred implementation mode before starting the preview
-//        previewView.preferredImplementationMode = ImplementationMode.SURFACE_VIEW
-//
-//// Attach the preview use case and previewView to start the preview
-//        preview.setSurfaceProvider(previewView.createSurfaceProvider(cameraInfo))
-//
-//        // Create a preview use case instance
-//        val preview = Preview.Builder().build()
-//
-//        // Bind the preview use case and other needed user cases to a lifecycle
-//        val camera = cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageAnalysis, imageCapture)
-//
-//        // Create a surfaceProvider using the bound camera's cameraInfo
-//        val surfaceProvider = previewView.createSurfaceProvider(camera.cameraInfo)
-//
-//        // Attach the surfaceProvider to the preview use case to start preview
-//        preview.setSurfaceProvider(surfaceProvider)
-//
-//
-//        previewView.setScaleType(ScaleType.FIT_CENTER)
         createImage()
 
         val previewView = findViewById<PreviewView>(R.id.cameraView)
@@ -135,7 +107,6 @@ class NewImageActivity : AppCompatActivity() {
         if (image!!.images.size > 0) {
             MainActivity.addImage(image!!)
         }
-        image = null
         finish()
     }
 
@@ -144,5 +115,4 @@ class NewImageActivity : AppCompatActivity() {
         intent.putExtra("address", address)
         startActivity(intent)
     }
-
 }
