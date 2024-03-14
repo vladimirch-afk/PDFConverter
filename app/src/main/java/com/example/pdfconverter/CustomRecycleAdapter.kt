@@ -1,13 +1,15 @@
 package com.example.pdfconverter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.GlobalScope
 
 
 class CustomRecyclerAdapter (
@@ -26,6 +28,7 @@ class CustomRecyclerAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = images[position]
         holder.name.text = image.name
+        holder.date.text = image.date
 
         val imagePath = image.images[0]
         val file = java.io.File(imagePath)
@@ -48,6 +51,29 @@ class CustomRecyclerAdapter (
         }
         holder.button2.setOnClickListener {
             (ctx as MainActivity).exportToPDF(image)
+        }
+        holder.name.setOnClickListener {
+            val builder = AlertDialog.Builder(ctx)
+            builder.setTitle("Имя:")
+
+            val input = EditText(ctx)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            input.hint = image.name
+            builder.setView(input)
+
+            builder.setPositiveButton(
+                "OK"
+            ) { dialog, which -> image.name = if (input.text.toString().isNotEmpty())
+            {
+                input.getText().toString()
+            }
+            else "NO_NAME";
+                (ctx as MainActivity).adapter.notifyDataSetChanged();
+                dialog.cancel()}
+            builder.setNegativeButton(
+                "Отмена"
+            ) { dialog, which ->  dialog.cancel()}
+            builder.show()
         }
     }
 
@@ -78,6 +104,7 @@ class CustomRecyclerAdapter (
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView
+        val date: TextView
         val image: ImageView
         val button1: ImageView
         val button2: ImageView
@@ -87,6 +114,7 @@ class CustomRecyclerAdapter (
             image = view.findViewById(R.id.imageView)
             button1 = view.findViewById(R.id.deleteButton)
             button2 = view.findViewById(R.id.exportButton)
+            date = view.findViewById(R.id.dateText)
         }
     }
 }

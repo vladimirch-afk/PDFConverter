@@ -18,6 +18,8 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class NewImageActivity : AppCompatActivity() {
@@ -29,7 +31,9 @@ class NewImageActivity : AppCompatActivity() {
 
         fun createImage() {
             imagesName = System.currentTimeMillis().toString()
-            image = MyImage(imagesName!!, mutableListOf<String>())
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val currDate = "Время: " + formatter.format(LocalDateTime.now()).toString()
+            image = MyImage(imagesName!!, currDate, mutableListOf())
         }
 
         fun addImage(path : String) {
@@ -107,6 +111,7 @@ class NewImageActivity : AppCompatActivity() {
     }
 
     private fun goBack() {
+        Toast.makeText(this, "Сохранение...", Toast.LENGTH_SHORT).show()
         if (image!!.images.size > 0) {
             MainActivity.addImage(image!!)
         }

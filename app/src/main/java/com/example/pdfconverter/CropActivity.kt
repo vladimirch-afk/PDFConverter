@@ -3,6 +3,7 @@ package com.example.pdfconverter
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
@@ -52,11 +54,13 @@ class CropActivity : AppCompatActivity() {
         }
 
         bwButton.setOnClickListener {
-            setImageBW()
+            setImageBW(bwButton, colorButton)
         }
         colorButton.setOnClickListener {
-            setImageToColor()
+            setImageToColor(bwButton, colorButton)
         }
+        bwButton.setBackgroundColor(getResources().getColor(R.color.light_gray))
+        colorButton.setBackgroundColor(getResources().getColor(R.color.bright_gray))
 //        val displayMetrics = DisplayMetrics()
 //        windowManager.defaultDisplay.getMetrics(displayMetrics)
 //        bwButton.width = displayMetrics.widthPixels / 2
@@ -97,7 +101,9 @@ class CropActivity : AppCompatActivity() {
         cropImageView!!.setImageBitmap(currBitmap)
     }
 
-    private fun setImageBW() {
+    private fun setImageBW(bw : Button, col : Button) {
+        bw.setBackgroundColor(getResources().getColor(R.color.bright_gray))
+        col.setBackgroundColor(getResources().getColor(R.color.light_gray))
         if (tmpBitmap == null) {
             var bitmap = currBitmap
             tmpBitmap = currBitmap
@@ -107,7 +113,9 @@ class CropActivity : AppCompatActivity() {
         }
     }
 
-    private fun setImageToColor() {
+    private fun setImageToColor(bw : Button, col : Button) {
+        bw.setBackgroundColor(getResources().getColor(R.color.light_gray))
+        col.setBackgroundColor(getResources().getColor(R.color.bright_gray))
         if (tmpBitmap != null) {
             currBitmap = tmpBitmap
             tmpBitmap = null
@@ -116,6 +124,7 @@ class CropActivity : AppCompatActivity() {
     }
 
     private fun saveImage() {
+        Toast.makeText(this, "Сохранение...", Toast.LENGTH_LONG).show()
         if (currBitmap != null) {
             try {
                 FileOutputStream(address).use { out ->

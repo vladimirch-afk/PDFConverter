@@ -5,4 +5,5 @@
     <color name="gray">#303030</color>
     <color name="light_gray">#3E3E3E</color>
     <color name="bright_gray">#4F4F4F</color>
+    <color name="super_bright_gray">#CCCCCC</color>
 </resources>

@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun deleteImage(image : String, ctx : Context) {
+        Toast.makeText(this, "Удаление...", Toast.LENGTH_SHORT).show()
         System.gc()
         val img = images.find { it.name == image }
         for (item in img!!.images) {
@@ -160,19 +161,6 @@ class MainActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
-        println(images.toString())
-    }
-
-    private fun getOutputFile(): File? {
-        var isFolderCreated = true
-        return if (isFolderCreated) {
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-            val imageFileName = "PDF_$timeStamp"
-            File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "$imageFileName.pdf")
-        } else {
-            Toast.makeText(this, "Folder is not created", Toast.LENGTH_SHORT).show()
-            null
         }
         println(images.toString())
     }
