@@ -8,6 +8,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -56,8 +57,14 @@ class CropActivity : AppCompatActivity() {
         colorButton.setOnClickListener {
             setImageToColor()
         }
+//        val displayMetrics = DisplayMetrics()
+//        windowManager.defaultDisplay.getMetrics(displayMetrics)
+//        bwButton.width = displayMetrics.widthPixels / 2
+//        colorButton.width = displayMetrics.widthPixels / 2
 
-        cropImageView!!.setImageBitmap(android.graphics.BitmapFactory.decodeFile(address))
+
+        currBitmap = android.graphics.BitmapFactory.decodeFile(address)
+        cropImageView!!.setImageBitmap(currBitmap)
         startCrop()
     }
 
@@ -91,11 +98,13 @@ class CropActivity : AppCompatActivity() {
     }
 
     private fun setImageBW() {
-        var bitmap = currBitmap
-        tmpBitmap = currBitmap
-        bitmap = toGrayscale(bitmap!!)
-        currBitmap = bitmap
-        cropImageView!!.setImageBitmap(bitmap)
+        if (tmpBitmap == null) {
+            var bitmap = currBitmap
+            tmpBitmap = currBitmap
+            bitmap = toGrayscale(bitmap!!)
+            currBitmap = bitmap
+            cropImageView!!.setImageBitmap(bitmap)
+        }
     }
 
     private fun setImageToColor() {

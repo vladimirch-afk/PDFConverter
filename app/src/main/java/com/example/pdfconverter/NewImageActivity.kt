@@ -3,6 +3,7 @@ package com.example.pdfconverter
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.util.DisplayMetrics
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,8 @@ class NewImageActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             goBack()
         }
+
+
 
     }
 
